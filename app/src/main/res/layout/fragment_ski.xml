@@ -31,4 +31,17 @@
         android:text="@string/stop_skiing"
         />
 
+  <TextView android:text="@string/elapsed_time"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    />
+  <TextView
+    android:id="@+id/elapsed_timeTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textSize="50sp"
+    tools:text="1:00:01"/>
+
 </TableLayout>

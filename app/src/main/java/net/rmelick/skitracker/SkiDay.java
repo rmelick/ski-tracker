@@ -1,6 +1,7 @@
 package net.rmelick.skitracker;
 
 import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 
 /**
  * A day of skiing
@@ -18,4 +19,7 @@ public class SkiDay {
     return mStartDate;
   }
 
+  public long getElapsedSeconds() {
+    return Seconds.secondsBetween(mStartDate, DateTime.now()).getSeconds();
+  }
 }
