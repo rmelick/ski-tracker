@@ -14,7 +14,7 @@ public class SkiActivity extends ActionBarActivity {
         setContentView(R.layout.activity_ski);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SkiFragment.PlaceholderFragment())
+                    .add(R.id.container, new SkiFragment())
                     .commit();
         }
     }
