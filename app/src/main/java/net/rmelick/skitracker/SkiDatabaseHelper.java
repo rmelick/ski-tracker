@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.joda.time.DateTime;
+
 /**
  * Manage the database of ski days and the details of each day
  *
@@ -18,6 +20,15 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
   private static final String TABLE_SKI_DAY = "skiDay";
   private static final String COLUMN_SKI_START_DATE = "start_date";
 
+  // Location table
+  private static final String TABLE_LOCATION = "location";
+  private static final String COLUMN_LOCATION_LATITUDE = "latitude";
+  private static final String COLUMN_LOCATION_LONGITUDE = "longitude";
+  private static final String COLUMN_LOCATION_ALTITUDE = "altitude";
+  private static final String COLUMN_LOCATION_TIMESTAMP = "timestamp";
+  private static final String COLUMN_LOCATION_PROVIDER = "provider";
+  private static final String COLUMN_LOCATION_SKI_DAY_ID = "ski_day_id";
+
   public SkiDatabaseHelper(Context context) {
     super(context, DB_NAME, null, VERSION);
   }
@@ -28,7 +39,7 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
     db.execSQL("create table skiDay (_id integer primary key autoincrement, start_date integer)");
     // Create the location table
     db.execSQL("create table location (timestamp integer, latitude real, longitude real, altitude real," +
-        " provider varchar(100), ru_id integer references run(_id))");
+        " provider varchar(100), ski_day_id integer references skiDay(_id))");
   }
 
   @Override
@@ -43,5 +54,16 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
     ContentValues cv = new ContentValues();
     cv.put(COLUMN_SKI_START_DATE, skiDay.getStartDate().getMillis());
     return getWritableDatabase().insert(TABLE_SKI_DAY, null, cv);
+  }
+
+  public long insertAltitude(long skiDayId, double altitude) {
+    ContentValues cv = new ContentValues();
+    cv.put(COLUMN_LOCATION_LATITUDE, 0.0);
+    cv.put(COLUMN_LOCATION_LONGITUDE, 0.0);
+    cv.put(COLUMN_LOCATION_ALTITUDE, altitude);
+    cv.put(COLUMN_LOCATION_TIMESTAMP, DateTime.now().getMillis());
+    cv.put(COLUMN_LOCATION_PROVIDER, "pressureSensor");
+    cv.put(COLUMN_LOCATION_SKI_DAY_ID, skiDayId);
+    return getWritableDatabase().insert(TABLE_LOCATION, null, cv);
   }
 }

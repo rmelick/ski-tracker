@@ -12,6 +12,7 @@ import android.widget.TextView;
 import net.rmelick.skitracker.AltitudeManager;
 import net.rmelick.skitracker.R;
 import net.rmelick.skitracker.SkiDay;
+import net.rmelick.skitracker.SkiDayManager;
 
 /**
  * @author rmelick
@@ -23,6 +24,7 @@ public class SkiFragment extends Fragment {
   private TextView mElapsedTimeTextView;
   private double mCurrentAltitude;
   private AltitudeManager mAltitudeManager;
+  private SkiDayManager mSkiDayManager;
   private SkiDay mSkiDay;
 
   @Override
@@ -37,6 +39,7 @@ public class SkiFragment extends Fragment {
         updateUI();
       }
     });
+    mSkiDayManager = SkiDayManager.get(getActivity());
   }
 
   @Override
@@ -51,8 +54,7 @@ public class SkiFragment extends Fragment {
     mStartButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        mAltitudeManager.startPressureUpdates();
-        mSkiDay = new SkiDay();
+        mSkiDay = mSkiDayManager.startNewSkiDay();
       }
     });
 
@@ -60,7 +62,7 @@ public class SkiFragment extends Fragment {
     mStopButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        mAltitudeManager.stopPressureUpdates();
+        mSkiDayManager.stopTrackingSkiDay();
       }
     });
 
