@@ -39,7 +39,7 @@ public class SkiFragment extends Fragment {
 
         mAltitudeTextView = (TextView) rootView.findViewById(R.id.current_altitudeTextView);
 
-        mStartButton = (Button) rootView.findViewById(R.id.start_driveButton);
+        mStartButton = (Button) rootView.findViewById(R.id.start_skiButton);
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class SkiFragment extends Fragment {
             }
         });
 
-        mStopButton = (Button) rootView.findViewById(R.id.stop_driveButton);
+        mStopButton = (Button) rootView.findViewById(R.id.stop_skiButton);
         mStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

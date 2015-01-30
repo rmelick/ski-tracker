@@ -19,16 +19,16 @@
         android:textSize="100sp"
         tools:text="455.56"/>
     <Button
-        android:id="@+id/start_driveButton"
+        android:id="@+id/start_skiButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_driving"
+        android:text="@string/start_skiing"
         />
     <Button
-        android:id="@+id/stop_driveButton"
+        android:id="@+id/stop_skiButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stop_driving"
+        android:text="@string/stop_skiing"
         />
 
 </TableLayout>
