@@ -10,6 +10,7 @@ import org.joda.time.Seconds;
  */
 public class SkiDay {
   private final DateTime mStartDate;
+  private long mId;
 
   public SkiDay() {
     mStartDate = new DateTime();
@@ -17,6 +18,14 @@ public class SkiDay {
 
   public DateTime getStartDate() {
     return mStartDate;
+  }
+
+  public long getId() {
+    return mId;
+  }
+
+  public void setId(long id) {
+    mId = id;
   }
 
   public long getElapsedSeconds() {
