@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author rmelick
  */
@@ -88,6 +91,17 @@ public class SkiDayManager {
     }
     cursor.close();
     return altitude;
+  }
+
+  public List<AltitudePoint> getAltitudeHistory(long skiDayId) {
+    SkiDatabaseHelper.AltitudeCursor cursor = mDatabaseHelper.queryAltitudeHistoryForSkiDay(skiDayId);
+    List<AltitudePoint> altitudes = new ArrayList<AltitudePoint>(cursor.getCount());
+    cursor.moveToFirst();
+    while (cursor.moveToNext()) {
+      altitudes.add(new AltitudePoint(cursor.getAltitude(), cursor.getTime()));
+    }
+    cursor.close();
+    return altitudes;
   }
 
   public boolean isTrackingSkiDay(SkiDay skiDay) {

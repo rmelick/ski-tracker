@@ -141,6 +141,19 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
     return new AltitudeCursor(wrapped);
   }
 
+  public AltitudeCursor queryAltitudeHistoryForSkiDay(long skiDayId) {
+    Cursor wrapped = getReadableDatabase().query(
+        TABLE_LOCATION,
+        null, // all columns
+        COLUMN_LOCATION_SKI_DAY_ID + " = ?", // WHERE ski_day_id =
+        new String[]{ String.valueOf(skiDayId) },
+        null, // group by
+        null, // having
+        COLUMN_LOCATION_TIMESTAMP + " asc", // sort earliest timestamp first
+        null); // limit 1
+    return new AltitudeCursor(wrapped);
+  }
+
   public static class AltitudeCursor extends CursorWrapper {
     public AltitudeCursor(Cursor cursor) {
       super(cursor);
@@ -151,6 +164,13 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
         return 0;
       }
       return getDouble(getColumnIndex(COLUMN_LOCATION_ALTITUDE));
+    }
+
+    public long getTime() {
+      if (isBeforeFirst() || isAfterLast()) {
+        return 0;
+      }
+      return getLong(getColumnIndex(COLUMN_LOCATION_TIMESTAMP));
     }
   }
 }

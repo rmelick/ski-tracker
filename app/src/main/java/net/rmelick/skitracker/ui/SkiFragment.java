@@ -1,5 +1,6 @@
 package net.rmelick.skitracker.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -22,6 +23,7 @@ public class SkiFragment extends Fragment {
 
   private Button mStartButton;
   private Button mStopButton;
+  private Button mViewChartButton;
   private TextView mAltitudeTextView;
   private TextView mElapsedTimeTextView;
   private double mCurrentAltitude;
@@ -89,6 +91,21 @@ public class SkiFragment extends Fragment {
       public void onClick(View v) {
         mSkiDayManager.stopTrackingSkiDay();
         updateUI();
+      }
+    });
+
+    mViewChartButton = (Button) rootView.findViewById(R.id.view_chartButton);
+    mViewChartButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (mSkiDay != null) {
+          Intent i = new Intent(getActivity(), ChartActivity.class);
+          i.putExtra(SkiActivity.EXTRA_SKI_DAY_ID, mSkiDay.getId());
+          startActivity(i);
+        }
+
+
+
       }
     });
 

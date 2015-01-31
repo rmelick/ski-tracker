@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="100sp"
+        android:textSize="50sp"
         tools:text="455.56"/>
     <Button
         android:id="@+id/start_skiButton"
@@ -43,5 +43,12 @@
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:textSize="50sp"
     tools:text="1:00:01"/>
+
+  <Button
+    android:id="@+id/view_chartButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/view_chart"
+    />
 
 </TableLayout>

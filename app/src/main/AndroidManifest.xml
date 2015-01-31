@@ -20,6 +20,10 @@
             android:name=".ui.SkiActivity"
             android:label="@string/title_activity_ski_day_list" >
         </activity>
+        <activity
+            android:name=".ui.ChartActivity"
+            android:label="@string/title_activity_chart" >
+        </activity>
     </application>
 
 </manifest>
