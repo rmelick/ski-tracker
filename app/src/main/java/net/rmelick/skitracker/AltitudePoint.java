@@ -19,4 +19,9 @@ public class AltitudePoint {
   public long getTime() {
     return mTime;
   }
+
+  @Override
+  public String toString() {
+    return String.format("[altitude=%s, time=%s]", mAltitude, mTime);
+  }
 }
