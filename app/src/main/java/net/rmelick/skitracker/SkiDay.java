@@ -9,7 +9,7 @@ import org.joda.time.Seconds;
  * @author rmelick
  */
 public class SkiDay {
-  private final DateTime mStartDate;
+  private DateTime mStartDate;
   private long mId;
 
   public SkiDay() {
@@ -18,6 +18,10 @@ public class SkiDay {
 
   public DateTime getStartDate() {
     return mStartDate;
+  }
+
+  public void setStartDate(DateTime startDate) {
+    mStartDate = startDate;
   }
 
   public long getId() {

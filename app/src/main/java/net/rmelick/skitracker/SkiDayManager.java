@@ -64,6 +64,10 @@ public class SkiDayManager {
     mSharedPreferences.edit().remove(PREF_CURRENT_SKI_DAY_ID).commit();
   }
 
+  public SkiDatabaseHelper.SkiDayCursor querySkiDays() {
+    return mDatabaseHelper.querySkiRuns();
+  }
+
   private SkiDay createSkiDay() {
     SkiDay skiDay = new SkiDay();
     skiDay.setId(mDatabaseHelper.insertSkiDay(skiDay));

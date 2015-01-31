@@ -2,6 +2,8 @@ package net.rmelick.skitracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -13,12 +15,14 @@ import org.joda.time.DateTime;
  * @author rmelick
  */
 public class SkiDatabaseHelper extends SQLiteOpenHelper {
+  private static final String TAG = SkiDatabaseHelper.class.getName();
   private static final String DB_NAME = "ski.sqlite";
   private static final int VERSION = 1;
 
   // Ski Day table
   private static final String TABLE_SKI_DAY = "skiDay";
-  private static final String COLUMN_SKI_START_DATE = "start_date";
+  private static final String COLUMN_SKI_DAY_ID = "_id";
+  private static final String COLUMN_SKI_DAY_START_DATE = "start_date";
 
   // Location table
   private static final String TABLE_LOCATION = "location";
@@ -52,7 +56,7 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
    */
   public long insertSkiDay(SkiDay skiDay) {
     ContentValues cv = new ContentValues();
-    cv.put(COLUMN_SKI_START_DATE, skiDay.getStartDate().getMillis());
+    cv.put(COLUMN_SKI_DAY_START_DATE, skiDay.getStartDate().getMillis());
     return getWritableDatabase().insert(TABLE_SKI_DAY, null, cv);
   }
 
@@ -65,5 +69,43 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
     cv.put(COLUMN_LOCATION_PROVIDER, "pressureSensor");
     cv.put(COLUMN_LOCATION_SKI_DAY_ID, skiDayId);
     return getWritableDatabase().insert(TABLE_LOCATION, null, cv);
+  }
+
+  public SkiDayCursor querySkiRuns() {
+    // SELECT * FROM skiDay ORDER BY start_date ASC"
+    Cursor wrapped = getReadableDatabase().query(
+        TABLE_SKI_DAY,
+        null,
+        null,
+        null,
+        null,
+        null,
+        COLUMN_SKI_DAY_START_DATE + " asc"
+        );
+    return new SkiDayCursor(wrapped);
+  }
+
+  /**
+   * Wraps a cursor that returns rows from the "skiDay" table.  The {@link #getSkiDay()} will give a SkiRun instance
+   * representing the current row
+   *
+   */
+  public static class SkiDayCursor extends CursorWrapper {
+    public SkiDayCursor(Cursor c) {
+      super(c);
+    }
+
+    /**
+     * @return a SkiDay object configured for the current row, or null if the row is invalid
+     */
+    public SkiDay getSkiDay() {
+      if (isBeforeFirst() || isAfterLast()) {
+        return null;
+      }
+      SkiDay skiDay = new SkiDay();
+      skiDay.setId(getLong(getColumnIndex(COLUMN_SKI_DAY_ID)));
+      skiDay.setStartDate(new DateTime(getLong(getColumnIndex(COLUMN_SKI_DAY_START_DATE))));
+      return skiDay;
+    }
   }
 }
