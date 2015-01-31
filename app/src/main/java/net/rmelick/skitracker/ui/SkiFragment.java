@@ -99,13 +99,8 @@ public class SkiFragment extends Fragment {
       @Override
       public void onClick(View v) {
         if (mSkiDay != null) {
-          Intent i = new Intent(getActivity(), ChartActivity.class);
-          i.putExtra(SkiActivity.EXTRA_SKI_DAY_ID, mSkiDay.getId());
-          startActivity(i);
+          startActivity(ChartActivity.getIntent(getActivity(), mSkiDay.getId()));
         }
-
-
-
       }
     });
 

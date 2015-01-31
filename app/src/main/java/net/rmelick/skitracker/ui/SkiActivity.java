@@ -1,5 +1,7 @@
 package net.rmelick.skitracker.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +11,17 @@ import net.rmelick.skitracker.R;
 
 
 public class SkiActivity extends ActionBarActivity {
-  public static final String EXTRA_SKI_DAY_ID = "net.rmelick.skitracker.ski_day_id";
+  private static final String EXTRA_SKI_DAY_ID = "net.rmelick.skitracker.ski_day_id";
+
+  /**
+   * Helper method to return intent with correct ExtraData
+   * @return
+   */
+  public static Intent getIntent(Context packageContext, long skiDayId) {
+    Intent i = new Intent(packageContext, SkiActivity.class);
+    i.putExtra(SkiActivity.EXTRA_SKI_DAY_ID, skiDayId);
+    return i;
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

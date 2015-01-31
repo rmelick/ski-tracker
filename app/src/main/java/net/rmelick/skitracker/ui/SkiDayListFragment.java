@@ -74,10 +74,8 @@ public class SkiDayListFragment extends ListFragment {
 
   @Override
   public void onListItemClick(ListView l, View v, int position, long id) {
-    // the incoming id is given to us correctly already by the CursorAdapter
-    Intent i = new Intent(getActivity(), SkiActivity.class);
-    i.putExtra(SkiActivity.EXTRA_SKI_DAY_ID, id);
-    startActivity(i);
+    // the incoming id given to us by the CursorAdapter matches our skiDayIds
+    startActivity(SkiActivity.getIntent(getActivity(), id));
   }
 
   private static class SkiDayCursorAdapter extends CursorAdapter {
