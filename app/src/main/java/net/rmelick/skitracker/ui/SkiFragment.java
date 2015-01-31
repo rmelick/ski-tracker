@@ -1,8 +1,8 @@
 package net.rmelick.skitracker.ui;
 
-import android.content.Intent;
+
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;

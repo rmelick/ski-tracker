@@ -1,15 +1,15 @@
 package net.rmelick.skitracker.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import net.rmelick.skitracker.R;
 
-public class ChartActivity extends ActionBarActivity {
+public class ChartActivity extends Activity {
   private static final String EXTRA_SKI_DAY_ID = "net.rmelick.skitracker.ski_day_id";
 
   public static Intent getIntent(Context packageContext, long skiDayId) {
@@ -24,7 +24,7 @@ public class ChartActivity extends ActionBarActivity {
     setContentView(R.layout.activity_chart);
     if (savedInstanceState == null) {
       long skiDayId = getIntent().getLongExtra(EXTRA_SKI_DAY_ID, -1);
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
           .add(R.id.chart_container, ChartFragment.newInstance(skiDayId))
           .commit();
     }

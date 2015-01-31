@@ -1,26 +1,20 @@
 package net.rmelick.skitracker.ui;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 import net.rmelick.skitracker.R;
 
-public class SkiDayListActivity extends ActionBarActivity {
+public class SkiDayListActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_ski_day_list);
     if (savedInstanceState == null) {
-      getSupportFragmentManager().beginTransaction()
+      getFragmentManager().beginTransaction()
           .add(R.id.ski_list_container, new SkiDayListFragment())
           .commit();
     }
