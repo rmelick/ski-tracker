@@ -1,5 +1,11 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools" tools:context="net.rmelick.skitracker.ui.SkiDayListActivity">
-  <item android:id="@+id/action_settings" android:title="@string/action_settings" android:orderInCategory="100"
-    app:showAsAction="never" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="net.rmelick.skitracker.ui.SkiDayListActivity">
+  <item
+    android:id="@+id/menu_item_new_ski_day"
+    android:title="@string/start_skiing"
+    android:orderInCategory="100"
+    android:icon="@android:drawable/ic_menu_add"
+    app:showAsAction="always" />
 </menu>
