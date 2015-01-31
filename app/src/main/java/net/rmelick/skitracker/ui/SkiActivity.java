@@ -9,14 +9,17 @@ import net.rmelick.skitracker.R;
 
 
 public class SkiActivity extends ActionBarActivity {
+  public static final String EXTRA_SKI_DAY_ID = "net.rmelick.skitracker.ski_day_id";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_ski);
     if (savedInstanceState == null) {
+      long existingSkiDayId = getIntent().getLongExtra(EXTRA_SKI_DAY_ID, -1);
+      SkiFragment skiFragment = existingSkiDayId == -1 ? new SkiFragment() : SkiFragment.newInstance(existingSkiDayId);
       getSupportFragmentManager().beginTransaction()
-          .add(R.id.container, new SkiFragment())
+          .add(R.id.container, skiFragment)
           .commit();
     }
   }

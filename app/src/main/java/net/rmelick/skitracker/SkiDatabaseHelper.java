@@ -71,7 +71,10 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
     return getWritableDatabase().insert(TABLE_LOCATION, null, cv);
   }
 
-  public SkiDayCursor querySkiRuns() {
+  /**
+   * Query for all ski days
+   */
+  public SkiDayCursor querySkiDays() {
     // SELECT * FROM skiDay ORDER BY start_date ASC"
     Cursor wrapped = getReadableDatabase().query(
         TABLE_SKI_DAY,
@@ -82,6 +85,22 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
         null,
         COLUMN_SKI_DAY_START_DATE + " asc"
         );
+    return new SkiDayCursor(wrapped);
+  }
+
+  /**
+   * Query for a single ski day
+   */
+  public SkiDayCursor querySkiDay(long id) {
+    Cursor wrapped = getReadableDatabase().query(
+        TABLE_SKI_DAY,
+        null, // all columns
+        COLUMN_SKI_DAY_ID + " = ?", // WHERE run_id =
+        new String[] { String.valueOf(id) },
+        null, // group by
+        null, // order by
+        null, // having
+        "1"); // LIMIT 1
     return new SkiDayCursor(wrapped);
   }
 

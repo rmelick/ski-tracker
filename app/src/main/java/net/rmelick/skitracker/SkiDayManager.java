@@ -65,7 +65,22 @@ public class SkiDayManager {
   }
 
   public SkiDatabaseHelper.SkiDayCursor querySkiDays() {
-    return mDatabaseHelper.querySkiRuns();
+    return mDatabaseHelper.querySkiDays();
+  }
+
+  public SkiDay getSkiDay(long id) {
+    SkiDay skiDay = null;
+    SkiDatabaseHelper.SkiDayCursor cursor = mDatabaseHelper.querySkiDay(id);
+    cursor.moveToFirst();
+    if (!cursor.isAfterLast()) {
+      skiDay = cursor.getSkiDay();
+    }
+    cursor.close();
+    return skiDay;
+  }
+
+  public boolean isTrackingSkiDay(SkiDay skiDay) {
+    return mAltitudeManager.isRunning() && skiDay != null && skiDay.getId() == mCurrentSkiDayId;
   }
 
   private SkiDay createSkiDay() {

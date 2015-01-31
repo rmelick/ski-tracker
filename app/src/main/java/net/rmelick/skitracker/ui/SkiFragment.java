@@ -18,6 +18,8 @@ import net.rmelick.skitracker.SkiDayManager;
  * @author rmelick
  */
 public class SkiFragment extends Fragment {
+  private static final String ARG_SKI_DAY_ID = "SKI_DAY_ID";
+
   private Button mStartButton;
   private Button mStopButton;
   private TextView mAltitudeTextView;
@@ -27,6 +29,14 @@ public class SkiFragment extends Fragment {
   private SkiDayManager mSkiDayManager;
   private SkiDay mSkiDay;
 
+  public static SkiFragment newInstance(long skiDayId) {
+    Bundle args = new Bundle();
+    args.putLong(ARG_SKI_DAY_ID, skiDayId);
+    SkiFragment skiFragment = new SkiFragment();
+    skiFragment.setArguments(args);
+    return skiFragment;
+  }
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -35,11 +45,20 @@ public class SkiFragment extends Fragment {
     mAltitudeManager.registerCallback(new AltitudeManager.NewAltitudeCallback() {
       @Override
       public void newAltitude(double altitude) {
+        if (!mSkiDayManager.isTrackingSkiDay(mSkiDay)) {
+          return;
+        }
         mCurrentAltitude = altitude;
         updateUI();
       }
     });
     mSkiDayManager = SkiDayManager.get(getActivity());
+
+    // if a ski day id was passed in, query the db
+    Bundle args = getArguments();
+    if (args != null && args.getLong(ARG_SKI_DAY_ID, -1) != -1) {
+      mSkiDay = mSkiDayManager.getSkiDay(args.getLong(ARG_SKI_DAY_ID, -1));
+    }
   }
 
   @Override
@@ -54,7 +73,12 @@ public class SkiFragment extends Fragment {
     mStartButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        mSkiDay = mSkiDayManager.startNewSkiDay();
+        if (mSkiDay == null) {
+          mSkiDay = mSkiDayManager.startNewSkiDay();
+        } else {
+          mSkiDayManager.startTrackingSkiDay(mSkiDay);
+        }
+        updateUI();
       }
     });
 
@@ -63,6 +87,7 @@ public class SkiFragment extends Fragment {
       @Override
       public void onClick(View v) {
         mSkiDayManager.stopTrackingSkiDay();
+        updateUI();
       }
     });
 
@@ -76,5 +101,8 @@ public class SkiFragment extends Fragment {
     if (mSkiDay != null) {
       mElapsedTimeTextView.setText(DateUtils.formatElapsedTime(mSkiDay.getElapsedSeconds()));
     }
+    boolean currentlyTracking = mSkiDayManager.isTrackingSkiDay(mSkiDay);
+    mStartButton.setEnabled(!currentlyTracking);
+    mStopButton.setEnabled(currentlyTracking);
   }
 }

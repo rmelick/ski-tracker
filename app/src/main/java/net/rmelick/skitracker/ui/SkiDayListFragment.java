@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import net.rmelick.skitracker.R;
@@ -69,6 +70,14 @@ public class SkiDayListFragment extends ListFragment {
       mCursor.requery();
       ((SkiDayCursorAdapter)getListAdapter()).notifyDataSetChanged();
     }
+  }
+
+  @Override
+  public void onListItemClick(ListView l, View v, int position, long id) {
+    // the incoming id is given to us correctly already by the CursorAdapter
+    Intent i = new Intent(getActivity(), SkiActivity.class);
+    i.putExtra(SkiActivity.EXTRA_SKI_DAY_ID, id);
+    startActivity(i);
   }
 
   private static class SkiDayCursorAdapter extends CursorAdapter {
