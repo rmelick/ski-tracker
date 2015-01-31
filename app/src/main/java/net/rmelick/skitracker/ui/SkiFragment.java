@@ -58,6 +58,7 @@ public class SkiFragment extends Fragment {
     Bundle args = getArguments();
     if (args != null && args.getLong(ARG_SKI_DAY_ID, -1) != -1) {
       mSkiDay = mSkiDayManager.getSkiDay(args.getLong(ARG_SKI_DAY_ID, -1));
+      mCurrentAltitude = mSkiDayManager.getLastAltitudeForSkiDay(mSkiDay.getId());
     }
   }
 

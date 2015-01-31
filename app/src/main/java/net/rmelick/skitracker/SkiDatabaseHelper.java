@@ -127,4 +127,30 @@ public class SkiDatabaseHelper extends SQLiteOpenHelper {
       return skiDay;
     }
   }
+
+  public AltitudeCursor queryLastAltitudeForSkiDay(long skiDayId) {
+    Cursor wrapped = getReadableDatabase().query(
+        TABLE_LOCATION,
+        null, // all columns
+        COLUMN_LOCATION_SKI_DAY_ID + " = ?", // WHERE ski_day_id =
+        new String[]{ String.valueOf(skiDayId) },
+        null, // group by
+        null, // having
+        COLUMN_LOCATION_TIMESTAMP + " desc", // sort latest timestamp first
+        "1"); // limit 1
+    return new AltitudeCursor(wrapped);
+  }
+
+  public static class AltitudeCursor extends CursorWrapper {
+    public AltitudeCursor(Cursor cursor) {
+      super(cursor);
+    }
+
+    public double getAltitude() {
+      if (isBeforeFirst() || isAfterLast()) {
+        return 0;
+      }
+      return getDouble(getColumnIndex(COLUMN_LOCATION_ALTITUDE));
+    }
+  }
 }

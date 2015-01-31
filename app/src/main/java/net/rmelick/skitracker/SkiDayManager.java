@@ -79,6 +79,17 @@ public class SkiDayManager {
     return skiDay;
   }
 
+  public double getLastAltitudeForSkiDay(long skiDayId) {
+    double altitude = 0;
+    SkiDatabaseHelper.AltitudeCursor cursor = mDatabaseHelper.queryLastAltitudeForSkiDay(skiDayId);
+    cursor.moveToFirst();
+    if (!cursor.isAfterLast()) {
+      altitude = cursor.getAltitude();
+    }
+    cursor.close();
+    return altitude;
+  }
+
   public boolean isTrackingSkiDay(SkiDay skiDay) {
     return mAltitudeManager.isRunning() && skiDay != null && skiDay.getId() == mCurrentSkiDayId;
   }
